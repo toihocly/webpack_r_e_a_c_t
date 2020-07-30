@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Advent Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('@/fonts/AdventPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Rowdies';
+  font-style: normal;
+  font-weight: 400;
+  src: url('@/fonts/Rowdies-Regular.ttf') format('truetype');
+}
+
+.hello-text {
+  color: red;
+  font-family: 'Advent Pro';
+  font-size: 50px;
+}
