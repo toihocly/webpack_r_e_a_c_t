@@ -1,0 +1,13 @@
+export const authTypes = {
+  CHECK_USER_REQUEST: 'CHECK_USER_REQUEST',
+  LOGOUT: 'LOGOUT',
+  USER_LOGIN: 'USER_LOGIN',
+  SET_USER_INFOMATION: 'SET_USER_INFOMATION',
+};
+
+export const loadingTypes = {
+  OPEN: 'OPEN',
+  CLOSE: 'CLOSE',
+  ERROR: 'ERROR',
+  BOOTSTRAP_APP: 'BOOTSTRAP_APP',
+};
