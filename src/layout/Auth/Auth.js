@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import { Dashboard } from '@/layout';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as Helpers from '@/helpers';
+import { USER_ROLE, TOKEN } from '@/constants';
 
 const Auth = () => {
+  const history = useHistory();
   const [text, setText] = useState('');
-  const [isVerified, setVerified] = useState(false);
-  console.log('vao 1 lan ');
-  useEffect(() => {
-    setVerified(!!Helpers.getStorage('token'));
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Helpers.setStorage('token', text);
-    setVerified(true);
+    if (text === 'ADMIN' || text === 'USER' || text === 'IT') {
+      Helpers.setStorage(TOKEN, text);
+      Helpers.setStorage(USER_ROLE, text);
+      history.push('/dashboard');
+    } else {
+      alert('FAIL!!! Value valid is ADMIN / USER / IT');
+    }
   };
-
-  if (isVerified) return <Redirect to={'/dashboard'} />;
 
   return (
     <div>

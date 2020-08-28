@@ -1,11 +1,20 @@
 import React from 'react';
-import * as Helpers from '@/helpers';
+import { useHistory, Link } from 'react-router-dom';
+import { logout } from '@/utils';
+// import { routes } from '../../routes';
+import { userRole } from '../../utils';
+import { routes } from '../../routes';
+
 const Dashboard = () => {
+  const history = useHistory();
   const handleLogout = () => {
-    Helpers.removeItemStorage('token');
+    logout();
     console.log('bi da ra ');
+    history.push('/login');
   };
-  console.log('da vao day');
+
+  console.log('s : ', routes);
+
   return (
     <div>
       <h2>DASHBOARD</h2>
@@ -15,10 +24,15 @@ const Dashboard = () => {
       <br />
       <br />
       <br />
-      <h5>navigation</h5>
-      <p>ROOM BOOKING</p>
-      <p>CHAT</p>
-      <p>SETTINGS</p>
+
+      {routes.map((i, idx) => {
+        if (i.roles.some((j) => j === userRole()))
+          return (
+            <div key={idx}>
+              <Link to={i.path}>{i.name}</Link>
+            </div>
+          );
+      })}
     </div>
   );
 };

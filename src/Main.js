@@ -1,43 +1,25 @@
-import React, { Component } from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from '@/components';
 import { history } from '@/helpers/history';
-import imagename from '@/images/imagename.jpg';
-import CsvData from '@/mycsv.csv';
 import { Auth, Dashboard } from '@/layout';
+import { userRole } from '@/utils';
+import { routes } from '@/routes';
 
-const Home = () => {
-  return <Redirect to={'/login'} />;
+const Main = () => {
   return (
-    <div>
-      <h2>DAY LA HOME</h2>
-    </div>
-  );
-};
-
-const Main = (props) => {
-  console.log('CsvData : ', CsvData);
-  const basicCode = (
-    <div>
-      <p className="hello-text">Hello from react! Toi da build dc ban roi</p>s
-      <p>
-        <img src={imagename} alt="Image name" />
-      </p>
-    </div>
-  );
-  return (
-    <>
-      {/* {basicCode} */}
-      <Router history={history}>
-        <Switch>
-          <PublicRoute restricted={true} exact path="/login" component={Auth} />
-          <PublicRoute restricted={false} exact path="/" component={Home} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
-          {/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
-          {/* <Route path="*" render={() => <h1>Page not found</h1>} /> */}
-        </Switch>
-      </Router>
-    </>
+    <BrowserRouter history={history}>
+      <Switch>
+        <PublicRoute restricted={true} exact path="/login" component={Auth} />
+        <PublicRoute restricted={true} exact path="/" component={Auth} />
+        <PrivateRoute exact component={Dashboard} path="/dashboard" />
+        {routes.map((i, idx) => {
+          if (i.roles.some((j) => j === userRole()))
+            return <PrivateRoute key={idx} exact={i.exact} component={i.component} path={i.path} />;
+        })}
+        <Route path="*" render={() => <h1>Page not found</h1>} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
